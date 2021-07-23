@@ -1,24 +1,54 @@
-import logo from './logo.svg';
 import './App.css';
-
+import Listar from "./component/Listar";
+import Crear from './component/Crear';
+import Editar from './component/Editar';
+import {
+  Route,
+  BrowserRouter as Router,
+  Link
+} from "react-router-dom";
+import { create } from 'istanbul-reports';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <nav className="navbar navbar-expand navbar-light bg-light">
+        <div className="nav navbar-nav">
+          <Link 
+            className="nav-item nav-link active"
+            to="/"
+          >
+            Systema
+            <span className="sr-only">
+
+            </span>
+          </Link>
+          <Link className="nav-item nav-link"
+            to="/crear"
+            >
+            Crear Empleado
+          </Link>
+          <Link className="nav-item nav-link"
+            to="/editar"
+            >
+            Editar Empleado
+          </Link>
+        </div>
+      </nav>
+      <div className="container">
+        <Route 
+          exact path="/"
+          component={Listar}
+        ></Route>
+        <Route 
+          path="/crear"
+          component={Crear}
+        ></Route>
+        <Route 
+          path="/editar"
+          component={Editar}
+        ></Route>
+      </div>
+    </Router>
   );
 }
 
