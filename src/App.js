@@ -23,12 +23,12 @@ function App() {
             </span>
           </Link>
           <Link className="nav-item nav-link"
-            to="/crear"
+            to="/app/crear"
             >
             Crear Empleado
           </Link>
           <Link className="nav-item nav-link"
-            to="/editar"
+            to="/app/editar"
             >
             Editar Empleado
           </Link>
@@ -40,11 +40,11 @@ function App() {
           component={Listar}
         ></Route>
         <Route 
-          path="/crear"
+          path="/app/crear"
           component={Crear}
         ></Route>
         <Route 
-          path="/editar"
+          path="/app/editar/:id"
           component={Editar}
         ></Route>
       </div>

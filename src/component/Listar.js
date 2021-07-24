@@ -1,4 +1,5 @@
 import React from 'react';
+import Swal from 'sweetalert2'
 import {Link} from "react-router-dom";
 class Listar extends React.Component {
     constructor(props) {
@@ -8,8 +9,20 @@ class Listar extends React.Component {
             empleados:[]
         }
     }
+    borrarRegistro = (id) =>{
+        console.log(id);
+        fetch("http://localhost/crud-react/api/?borrar="+id)
+        .then(respuesta =>respuesta.json())
+        .then((datosRespuesta)=>{
+            console.log(datosRespuesta);
+            this.cargarDatos();
+        })
+        .catch(error=>{
+            console.log(error);
+        });
+    }
     cargarDatos(){
-        fetch("https://jsonplaceholder.typicode.com/users")
+        fetch("http://localhost/crud-react/api/")
         .then(respuesta =>respuesta.json())
         .then((datosRespuesta)=>{
             console.log(datosRespuesta);
@@ -33,40 +46,66 @@ class Listar extends React.Component {
             );
         }else{
         return (
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Correo</th>
-                        <th>Aciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {
-                    empleados.map(
-                        (empleado)=>(
-                        <tr key={empleado.id}>
-                            <td>{empleado.id}</td>
-                            <td>{empleado.name}</td>
-                            <td>{empleado.email}</td>
-                            <td>
-                                <div className="btn-group" role="group" aria-label="">
-                                    <Link type="button" to={"/editar"} className="btn btn-warning">
-                                        Editar
-                                    </Link>
-                                    <Link type="button" className="btn btn-danger">
-                                        Eliminar
-                                    </Link>
-                                </div>
-                            </td>
-                        </tr>
-                        )
-                    )
-                }
+            <>
+            <div className="card">
+                <div className="card-header">
+                    <Link className="btn btn-success"
+                        to={"/app/crear"}
+                    >
+                        Agregar Nevo Empleado
+                    </Link>
+                </div>
+                <div className="card-body">
+                    <h4>Listar empleados</h4>
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Aciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            empleados.map(
+                                (empleado)=>(
+                                <tr key={empleado.id}>
+                                    <td>{empleado.id}</td>
+                                    <td>{empleado.nombre}</td>
+                                    <td>{empleado.correo}</td>
+                                    <td>
+                                        <div className="btn-group" role="group" aria-label="">
+                                            <Link 
+                                                to={"/app/editar/"+empleado.id}
+                                                className="btn btn-warning"
+
+                                            >
+                                                Editar
+                                            </Link>
+                                            <button
+                                                className="btn btn-danger"
+                                                onClick={()=>{
+                                                    this.borrarRegistro(empleado.id)
+                                                }}
+                                            >
+                                                Eliminar
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                )
+                            )
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                <div className="card-footer">
                     
-                </tbody>
-            </table>);
+                </div>
+            </div>
+            </>
+            );
         }
     }
 }
