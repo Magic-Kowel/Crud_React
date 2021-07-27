@@ -7,16 +7,17 @@ class Crear extends React.Component {
         super(props);
         this.state = {
             nombre:"",
-            correo:""
+            correo:"",
+            errores:[]
         }
-    }
-    componentDidMount(){
-
     }
     cambioValor = (e)=>{
         const state = this.state;
         state[e.target.name] = e.target.value;
-        this.setState({state});
+        this.setState({state,errores:[]});
+    }
+    verificarError(elemento){
+        return this.state.errores.indexOf(elemento) !==-1;
     }
     enviarDatos = (e)=>{
         e.preventDefault();
@@ -24,6 +25,17 @@ class Crear extends React.Component {
         const {nombre,correo} = this.state;
         console.log(nombre);
         console.log(correo);
+
+        let errores=[];
+        if(!nombre){
+            errores.push("error_nombre");
+        }
+        if(!correo){
+            errores.push("error_correo");
+        }
+        this.setState({errores:errores});
+        if(errores.length>0) return false;
+
         let datosEnviar ={
             nombre:nombre,
             correo:correo
@@ -57,11 +69,11 @@ class Crear extends React.Component {
                     Empleados
                 </div>
                 <div className="card-body">
-                    <form 
+                    <form className="needs-validation"
                         onSubmit={this.enviarDatos}
                     >
                         <div className="mb-3">
-                            <label htmlFor="" className="form-label">
+                            <label htmlFor="nombre" className="form-label">
                                 Nombre
                             </label>
                             <input 
@@ -69,12 +81,20 @@ class Crear extends React.Component {
                             value={nombre}
                             name="nombre"
                             onChange={this.cambioValor}
-                            className="form-control"
+                            className={(
+                                (this.verificarError("error_nombre"))?"is-invalid":"")+" form-control"
+                            }
                             id="nombre"
-                            aria-describedby="nombreHelp"
+                            aria-describedby="nombrePrepend"
+                            ria-describedby="validarNombre"
+                            
                             />
-                            <div id="nombreHelp" className="form-text">Escribe el nombre del empleado</div>
+                            <div class="invalid-tooltip">
+                                Rellene Nombre
+                            </div>
+                            <div id="nombre" className=" form-text">Escribe el nombre del empleado</div>
                         </div>
+                        
                         <div className="mb-3">
                             <label htmlFor="" className="form-label">
                                 Correo
@@ -84,9 +104,12 @@ class Crear extends React.Component {
                                 value={correo}
                                 name="correo"
                                 onChange={this.cambioValor}
-                                className="form-control"
+                                className={(
+                                    (this.verificarError("error_correo"))?"is-invalid":"")+" form-control"
+                                }
                                 id="Correo"
                                 aria-describedby="CorreoHelp"
+                                
                             />
                             <div id="CorreoHelp" className="form-text">Escribe el Correo del empleado</div>
                         </div>

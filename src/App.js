@@ -22,16 +22,6 @@ function App() {
 
             </span>
           </Link>
-          <Link className="nav-item nav-link"
-            to="/app/crear"
-            >
-            Crear Empleado
-          </Link>
-          <Link className="nav-item nav-link"
-            to="/app/editar"
-            >
-            Editar Empleado
-          </Link>
         </div>
       </nav>
       <div className="container">
