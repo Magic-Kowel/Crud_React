@@ -2,6 +2,7 @@ import React from 'react';
 import Swal from 'sweetalert2'
 import {Link} from "react-router-dom";
 import api from '../services/api';
+import Spinner from './Spinner';
 class Listar extends React.Component {
     constructor(props) {
         super(props);
@@ -12,15 +13,25 @@ class Listar extends React.Component {
     }
     borrarRegistro = (id) =>{
         console.log(id);
-        fetch(api+"?borrar="+id)
-        .then(respuesta =>respuesta.json())
-        .then((datosRespuesta)=>{
-            console.log(datosRespuesta);
-            this.cargarDatos();
+        Swal.fire({
+            title: 'Deseas eliminar?',
+            showCancelButton: true,
+            confirmButtonText: `Eliminar`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                Swal.fire('Usuario Eliminado!', '', 'success')
+                fetch(api+"?borrar="+id)
+                .then(respuesta =>respuesta.json())
+                .then((datosRespuesta)=>{
+                    console.log(datosRespuesta);
+                    this.cargarDatos();
+                })
+                .catch(error=>{
+                    console.log(error);
+                });
+            }
         })
-        .catch(error=>{
-            console.log(error);
-        });
     }
     cargarDatos(){
         fetch(api)
@@ -43,7 +54,7 @@ class Listar extends React.Component {
         const {datosCargados,empleados}= this.state;
         if(!datosCargados){
             return(
-                <div>Cargando...</div>
+                <Spinner />
             );
         }else{
         return (

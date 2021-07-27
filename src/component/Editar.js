@@ -2,24 +2,38 @@ import React from 'react';
 import Swal from 'sweetalert2'
 import api from '../services/api';
 import { Link } from 'react-router-dom';
+import Spinner from './Spinner';
 class Editar extends React.Component{
     constructor(props) {
         super(props);
         this.state = { 
             datosCargados:false,
-            empleado:[]
+            empleado:[],
+            errores:[]
         }
     }
     cambioValor = (e)=>{
         const state = this.state.empleado;
         state[e.target.name] = e.target.value;
-        this.setState({empleado:state});
+        this.setState({empleado:state,errores:[]});
+    }
+    verificarError(elemento){
+        return this.state.errores.indexOf(elemento) !==-1;
     }
     enviarDatos = (e)=>{
         e.preventDefault();
         console.log("Formulario enviado...");
         const{id,nombre,correo} = this.state.empleado;
         console.log(id+' '+nombre+' '+correo);
+        let errores=[];
+        if(!nombre){
+            errores.push("error_nombre");
+        }
+        if(!correo){
+            errores.push("error_correo");
+        }
+        this.setState({errores:errores});
+        if(errores.length>0) return false;
         let datosEnviar ={
             id:id,
             nombre:nombre,
@@ -66,7 +80,7 @@ class Editar extends React.Component{
         const {datosCargados, empleado} = this.state;
         if(!datosCargados){
             return(
-                <div>Cargando...</div>
+                <spinner />
             );
         }else{
             return ( 
@@ -103,7 +117,9 @@ class Editar extends React.Component{
                                 value={empleado.nombre}
                                 name="nombre"
                                 onChange={this.cambioValor}
-                                className="form-control"
+                                className={(
+                                    (this.verificarError("error_nombre"))?"is-invalid":"")+" form-control"
+                                }
                                 id="nombre"
                                 aria-describedby="nombreHelp"
                                 />
@@ -118,7 +134,9 @@ class Editar extends React.Component{
                                     value={empleado.correo}
                                     name="correo"
                                     onChange={this.cambioValor}
-                                    className="form-control"
+                                    className={(
+                                    (this.verificarError("error_correo"))?"is-invalid":"")+" form-control"
+                                    }
                                     id="Correo"
                                     aria-describedby="CorreoHelp"
                                 />

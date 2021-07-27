@@ -69,7 +69,7 @@ class Crear extends React.Component {
                     Empleados
                 </div>
                 <div className="card-body">
-                    <form className="needs-validation"
+                    <form
                         onSubmit={this.enviarDatos}
                     >
                         <div className="mb-3">
@@ -89,10 +89,10 @@ class Crear extends React.Component {
                             ria-describedby="validarNombre"
                             
                             />
-                            <div class="invalid-tooltip">
-                                Rellene Nombre
+                            <div class="invalid-feedback">
+                            Escribe el nombre del empleado
                             </div>
-                            <div id="nombre" className=" form-text">Escribe el nombre del empleado</div>
+                            <div id="validarNombre" className=" form-text"></div>
                         </div>
                         
                         <div className="mb-3">
@@ -111,7 +111,9 @@ class Crear extends React.Component {
                                 aria-describedby="CorreoHelp"
                                 
                             />
-                            <div id="CorreoHelp" className="form-text">Escribe el Correo del empleado</div>
+                            <div class="invalid-feedback">
+                                Escribe el Correo del empleado
+                            </div>
                         </div>
                         <div className="btn-group" role="group" aria-label="Basic example">
                             <button type="submit" className="btn btn-success">
