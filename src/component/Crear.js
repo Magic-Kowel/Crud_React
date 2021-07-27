@@ -1,5 +1,6 @@
 import React from 'react';
 import Swal from 'sweetalert2'
+import api from '../services/api';
 import { Link } from 'react-router-dom';
 class Crear extends React.Component {
     constructor(props) {
@@ -27,7 +28,7 @@ class Crear extends React.Component {
             nombre:nombre,
             correo:correo
         };
-        fetch("http://localhost/crud-react/api/?insertar=1",{
+        fetch(api+"?insertar=1",{
             method:"POST",
             body:JSON.stringify(datosEnviar)
         })

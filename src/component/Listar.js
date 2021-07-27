@@ -1,6 +1,7 @@
 import React from 'react';
 import Swal from 'sweetalert2'
 import {Link} from "react-router-dom";
+import api from '../services/api';
 class Listar extends React.Component {
     constructor(props) {
         super(props);
@@ -11,7 +12,7 @@ class Listar extends React.Component {
     }
     borrarRegistro = (id) =>{
         console.log(id);
-        fetch("http://localhost/crud-react/api/?borrar="+id)
+        fetch(api+"?borrar="+id)
         .then(respuesta =>respuesta.json())
         .then((datosRespuesta)=>{
             console.log(datosRespuesta);
@@ -22,7 +23,7 @@ class Listar extends React.Component {
         });
     }
     cargarDatos(){
-        fetch("http://localhost/crud-react/api/")
+        fetch(api)
         .then(respuesta =>respuesta.json())
         .then((datosRespuesta)=>{
             console.log(datosRespuesta);
