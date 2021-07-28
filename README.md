@@ -16,12 +16,16 @@ You will also see any lint errors in the console.
 
 
 ## CRUD
+![CRUD](./src/img/crud-react.PNG "CRUD")
 
-![crud](./src/img/crud-react.PNG "crud")
 it will show all users in this view
-![./src/img/agregar.PNG](agregar usuario "./src/img/agregar.PNG")
+![add Users](./src/img/agregar.PNG "add Users")
+
 in this view is to add the users
-![./src/img/eliminar.PNG](agregar usuario "./src/img/eliminar.PNG")
+
+![update Users](./src/img/eliminar.PNG "update Users")
+
 Pressing the delete button will show you a message if you want to delete it or not.
-![./src/img/editar.PNG](agregar usuario "./src/img/editar.PNG")
+
+![delete Users](./src/img/editar.PNG "delete Users")
 Pressing the edit button will send you to another view where you can edit the data.
